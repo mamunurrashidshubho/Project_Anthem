@@ -1,0 +1,30 @@
+name: Check README for Name
+
+on:
+  pull_request:
+    paths:
+      - 'README.md'
+    types: [opened, edited, synchronize]
+
+jobs:
+  check-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Check if README.md contains my name
+      run: |
+        # Define the name to check for
+        NAME="Your Name"
+        
+        # Read the contents of README.md
+        README_CONTENT=$(cat README.md)
+        
+        # Check if the name exists in the README file
+        if [[ "$README_CONTENT" != *"$NAME"* ]]; then
+          echo "Error: README.md does not contain your name!"
+          exit 1
+        fi
+        echo "Success: README.md contains your name."
